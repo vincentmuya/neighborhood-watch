@@ -17,7 +17,7 @@ class Profile(models.Model):
 
     @classmethod
     def this_profile(cls):
-        profile = cls.objects.all()
+        profile = cls.objects.objects.get(pk=this_object_id)
         return profile
 
 

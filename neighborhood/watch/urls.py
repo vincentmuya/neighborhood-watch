@@ -8,6 +8,5 @@ urlpatterns=[
     url(r'^edit/profile/(\d+)$', views.update_profile, name='update-profile'),
     url(r'^profile/(\d+)$', views.profile, name ='profile'),
     ]
-
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

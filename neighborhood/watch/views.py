@@ -11,7 +11,8 @@ def index(request):
     return render(request, "index.html")
 
 def profile(request, user_id):
-    return render(request, "profile.html")
+    profile = Profile.objects.filter(user_id=request.user.id)
+    return render(request, "profile.html", {"profile":profile})
 
 @login_required
 @transaction.atomic
