@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm, Textarea
-from .models import Profile
+from .models import Profile,User
 
 
 class UserForm(forms.ModelForm):
@@ -11,4 +11,4 @@ class UserForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('url', 'location', 'company')
+        fields = ('bio', 'neighborhood_name', 'location','profile_image')
