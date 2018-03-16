@@ -20,6 +20,9 @@ class Profile(models.Model):
         profile = cls.objects.objects.get(pk=this_object_id)
         return profile
 
+class Post(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    post = HTMLField()
 
 def Create_profile(sender, **kwargs):
     if kwargs['created']:
