@@ -10,6 +10,9 @@ from .models import Profile
 def index(request):
     return render(request, "index.html")
 
+def profile(request, user_id):
+    return render(request, "profile.html")
+
 @login_required
 @transaction.atomic
 def update_profile(request, user_id):
@@ -19,11 +22,11 @@ def update_profile(request, user_id):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            return redirect('/')     
+            return redirect('/')
     else:
         user_form = UserForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)
-    return render(request, 'profile.html', {
+    return render(request, 'edit_profile.html', {
         'user_form': user_form,
         'profile_form': profile_form
     })
