@@ -1,3 +1,15 @@
 {%extends 'base.html'%} {% load bootstrap3 %} {% block content %} {{ block.super}}
-Working
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <form method="post">
+      {% csrf_token %}
+      {{ post_form.as_p }}
+      <button type="submit">Save changes</button>
+    </form>
+
+    <h1>Working</h1>
 {% endblock %}

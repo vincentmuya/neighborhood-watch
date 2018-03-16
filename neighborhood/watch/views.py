@@ -2,13 +2,25 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse, Http404,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-from .forms import ProfileForm,UserForm
+from .forms import ProfileForm,UserForm,PostForm
 from django.contrib.auth.models import User
 from .models import Profile
 
 # Create your views here.
 def index(request):
     return render(request, "index.html")
+
+def post(request, user_id):
+    if request.method == 'POST':
+        post_form = PostForm(request.POST, instance=request.user)
+        if post_form.is_valid():
+            post_form.save()
+            return redirect('/')
+    else:
+        post_form = PostForm(instance=request.user)
+    return render(request, 'index.html', {
+        'post_form': user_form
+    })
 
 def profile(request, user_id):
     profile = Profile.objects.filter(user_id=request.user.id)
