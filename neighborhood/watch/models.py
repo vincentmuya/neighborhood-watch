@@ -5,12 +5,27 @@ from django.dispatch import receiver
 from tinymce.models import HTMLField
 
 # Create your models here.
+class Neighborhood(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    neighborhood_name = models.CharField(max_length=30, blank=True)
+    neighborhood_location = models.CharField(max_length=30, blank=True)
+
+    def __str__(self):
+        return self.neighborhood_name
+
+    def save_neighborhood(self):
+        self.save()
+
+    @classmethod
+    def this_neighborhood(cls):
+        area = cls.objects.objects.get(pk=this_object_id)
+        return area
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_image = models.ImageField(upload_to="posts/",blank = True, null = True)
     bio = models.TextField(max_length=500, blank=True)
-    neighborhood_name = models.ManyToManyField(neighborhood_name)
-    neighborhood_location = models.ManyToManyField(neighborhood_location)
 
     def __str__(self):
         return self.user
@@ -37,21 +52,6 @@ class Post(models.Model):
         posts = cls.objects.all()
         return posts
 
-class Neighborhood(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    neighborhood_name = models.CharField(max_length=30, blank=True)
-    neighborhood_location = models.CharField(max_length=30, blank=True)
-
-    def __str__(self):
-        return self.neighborhood_name
-
-    def save_neighborhood(self):
-        self.save()
-
-    @classmethod
-    def this_neighborhood(cls):
-        area = cls.objects.objects.get(pk=this_object_id)
-        return area
 
 def Create_profile(sender, **kwargs):
     if kwargs['created']:
