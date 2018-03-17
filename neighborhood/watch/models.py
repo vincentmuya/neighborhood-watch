@@ -9,8 +9,8 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_image = models.ImageField(upload_to="posts/",blank = True, null = True)
     bio = models.TextField(max_length=500, blank=True)
-    neighborhood_location = models.CharField(max_length=30, blank=True)
-    neighborhood_name = models.CharField(max_length=30, blank=True)
+    neighborhood_name = models.ManyToManyField(neighborhood_name)
+    neighborhood_location = models.ManyToManyField(neighborhood_location)
 
     def __str__(self):
         return self.user
@@ -27,6 +27,7 @@ class Post(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null = True)
     title = models.CharField(max_length=30, blank=True)
     post = HTMLField()
+    pub_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
@@ -57,3 +58,9 @@ def Create_profile(sender, **kwargs):
         user_profile = Profile.objects.create(user=kwargs['instance'])
 
 post_save.connect(Create_profile,sender=User)
+
+def Create_neighborhood(sender, **kwargs):
+    if kwargs['created']:
+        user_neighborhood = Neighborhood.objects.create(user=kwargs['instance'])
+
+post_save.connect(Create_neighborhood,sender=User)
