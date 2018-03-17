@@ -25,6 +25,11 @@ class Post(models.Model):
     title =  models.CharField(max_length=30, blank=True)
     post = HTMLField()
 
+    @classmethod
+    def this_post(cls):
+        post = cls.objects.objects.get(pk=this_object_id)
+        return post
+
 def Create_profile(sender, **kwargs):
     if kwargs['created']:
         user_profile = Profile.objects.create(user=kwargs['instance'])

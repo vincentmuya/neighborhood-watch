@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns=[
     url(r'^$',views.index,name ='index'),
+    url(r'^post/(\d+)$',views.post,name ='post'),
     url(r'^edit/profile/(\d+)$', views.update_profile, name='update-profile'),
     url(r'^profile/(\d+)$', views.profile, name ='profile'),
     ]

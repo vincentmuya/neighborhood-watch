@@ -4,13 +4,15 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from .forms import ProfileForm,UserForm,PostForm
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile,Post
 
 # Create your views here.
 def index(request):
-    return render(request, "index.html")
+    post = Post.objects.filter(user_id=request.user.id)
+    return render(request, "index.html",{"post":post})
 
-def post(request, user_id):
+@transaction.atomic
+def post(request, post_id):
     if request.method == 'POST':
         post_form = PostForm(request.POST, instance=request.user)
         if post_form.is_valid():
@@ -18,8 +20,8 @@ def post(request, user_id):
             return redirect('/')
     else:
         post_form = PostForm(instance=request.user)
-    return render(request, 'index.html', {
-        'post_form': user_form
+    return render(request, 'post.html', {
+        'post_form': post_form
     })
 
 def profile(request, user_id):
