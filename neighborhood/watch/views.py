@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse, Http404,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-from .forms import ProfileForm,UserForm,PostForm
+from .forms import ProfileForm,UserForm,NewPostForm
 from django.contrib.auth.models import User
 from .models import Profile,Post
 
@@ -11,18 +11,19 @@ def index(request):
     post = Post.objects.filter(user_id=request.user.id)
     return render(request, "index.html",{"post":post})
 
-@transaction.atomic
-def post(request, post_id):
+@login_required(login_url='/accounts/login/')
+def new_post(request):
+    current_user = request.user
     if request.method == 'POST':
-        post_form = PostForm(request.POST, instance=request.user)
-        if post_form.is_valid():
-            post_form.save()
-            return redirect('/')
+        form = NewPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = current_user
+            post.save()
+
     else:
-        post_form = PostForm(instance=request.user)
-    return render(request, 'post.html', {
-        'post_form': post_form
-    })
+        form = NewPostForm()
+    return render(request, 'post.html', {"form": form},)
 
 def profile(request, user_id):
     profile = Profile.objects.filter(user_id=request.user.id)

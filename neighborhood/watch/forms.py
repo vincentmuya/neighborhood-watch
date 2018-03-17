@@ -13,7 +13,10 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ('bio', 'neighborhood_name', 'location','profile_image')
 
-class PostForm(forms.ModelForm):
+class NewPostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('title','post')
+        exclude = ['user']
+        widges = {
+
+        }

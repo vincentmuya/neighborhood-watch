@@ -21,14 +21,13 @@ class Profile(models.Model):
         return profile
 
 class Post(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    title =  models.CharField(max_length=30, blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null = True)
     post = HTMLField()
 
     @classmethod
     def this_post(cls):
-        post = cls.objects.objects.get(pk=this_object_id)
-        return post
+        posts = cls.objects.all()
+        return posts
 
 def Create_profile(sender, **kwargs):
     if kwargs['created']:
