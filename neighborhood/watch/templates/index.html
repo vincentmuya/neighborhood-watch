@@ -6,9 +6,10 @@
     <title></title>
   </head>
   <body>
+    <!-- <h1>Working</h1> -->
     {%for posts_item in posts%}
+    <h4>{{posts_item.title}}</h4>
     <h4>{{posts_item.post}}</h4>
-    <h1>Working</h1>
     {%endfor%}
   </body>
 {% endblock %}

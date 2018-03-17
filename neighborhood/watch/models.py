@@ -9,8 +9,11 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_image = models.ImageField(upload_to="posts/",blank = True, null = True)
     bio = models.TextField(max_length=500, blank=True)
-    location = models.CharField(max_length=30, blank=True)
+    neighborhood_location = models.CharField(max_length=30, blank=True)
     neighborhood_name = models.CharField(max_length=30, blank=True)
+
+    def __str__(self):
+        return self.user
 
     def save_profile(self):
         self.save()
@@ -25,10 +28,29 @@ class Post(models.Model):
     title = models.CharField(max_length=30, blank=True)
     post = HTMLField()
 
+    def __str__(self):
+        return self.title
+
     @classmethod
     def this_post(cls):
         posts = cls.objects.all()
         return posts
+
+class Neighborhood(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    neighborhood_name = models.CharField(max_length=30, blank=True)
+    neighborhood_location = models.CharField(max_length=30, blank=True)
+
+    def __str__(self):
+        return self.neighborhood_name
+
+    def save_neighborhood(self):
+        self.save()
+
+    @classmethod
+    def this_neighborhood(cls):
+        area = cls.objects.objects.get(pk=this_object_id)
+        return area
 
 def Create_profile(sender, **kwargs):
     if kwargs['created']:
