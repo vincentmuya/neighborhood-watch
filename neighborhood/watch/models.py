@@ -22,6 +22,7 @@ class Profile(models.Model):
 
 class Post(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null = True)
+    title = models.CharField(max_length=30, blank=True)
     post = HTMLField()
 
     @classmethod

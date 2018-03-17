@@ -8,8 +8,8 @@ from .models import Profile,Post
 
 # Create your views here.
 def index(request):
-    post = Post.objects.filter(user_id=request.user.id)
-    return render(request, "index.html",{"post":post})
+    posts = Post.this_post()
+    return render(request, "index.html",{"posts":posts})
 
 @login_required(login_url='/accounts/login/')
 def new_post(request):

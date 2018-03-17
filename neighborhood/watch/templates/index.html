@@ -6,6 +6,9 @@
     <title></title>
   </head>
   <body>
+    {%for posts_item in posts%}
+    <h4>{{posts_item.post}}</h4>
     <h1>Working</h1>
+    {%endfor%}
   </body>
 {% endblock %}
