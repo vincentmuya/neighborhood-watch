@@ -7,7 +7,6 @@ from tinymce.models import HTMLField
 # Create your models here.
 class Neighborhood(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    neighborhood_name = models.CharField(max_length=30, blank=True)
     neighborhood_location = models.CharField(max_length=30, blank=True)
 
     def __str__(self):
@@ -26,6 +25,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_image = models.ImageField(upload_to="posts/",blank = True, null = True)
     bio = models.TextField(max_length=500, blank=True)
+    neighborhood_name = models.CharField(max_length=30, blank=True)
 
     def __str__(self):
         return self.user
@@ -42,7 +42,6 @@ class Post(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null = True)
     title = models.CharField(max_length=30, blank=True)
     post = HTMLField()
-    pub_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title

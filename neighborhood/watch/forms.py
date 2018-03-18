@@ -11,7 +11,10 @@ class UserForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('bio','profile_image')
+        fields = ('bio','profile_image','neighborhood_name')
+        widges = {
+            'Neighborhood': forms.CheckboxSelectMultiple(),
+        }
 
 class NewPostForm(forms.ModelForm):
     class Meta:
@@ -20,8 +23,3 @@ class NewPostForm(forms.ModelForm):
         widges = {
 
         }
-
-class NeighborhoodForm(forms.ModelForm):
-    class Meta:
-        model = Neighborhood
-        fields = ('neighborhood_name', 'neighborhood_location')
