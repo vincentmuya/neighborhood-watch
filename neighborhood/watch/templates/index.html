@@ -1,15 +1,69 @@
 {%extends 'base.html'%} {% load bootstrap3 %} {% block content %} {{ block.super}}
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
   <body>
+    <header>
+      <img src="/static/street.jpg" alt="responsive" height="500"width="1290px">
+    </header>
     <!-- <h1>Working</h1> -->
-    {%for posts_item in posts%}
-    <h4>{{posts_item.title}}</h4>
-    <h4>{{posts_item.post}}</h4>
-    {%endfor%}
+    <div class="container">
+      {%for posts_item in posts%}
+      {%for profile_item in profile%}
+      <div class="tabs" style="width: 50rem;">
+     <div class="row">
+     <div class="col-md-2">
+         <img src=""class="Neighborhood-card-user-image">
+        <h3>{{profile_item.user}}</h3>
+        <h5>{{profile_item.neighborhood_name}}</h5>
+      </div>
+      <div class="col-md-10">
+        <ul>
+          <h4>{{posts_item.title}}</h4>
+          <h4>{{posts_item.post |safe}}</h4>
+        </ul>
+      </div>
+    </div>
+    </div>
+      {%endfor%}
+      {%endfor%}
+    </div>
+    {%include 'footer.html'%}
+
   </body>
-{% endblock %}
+  <head>
+  <style media="screen">
+  /*header {
+  background: url('/static/street.jpg');
+  background-repeat: no-repeat;
+  width: 1290px;
+  height: 500px;
+  background-color: white;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, .5);
+}*/
+  .tabs {
+ background-color: white;
+ margin: 50px;
+ padding: 40px;
+ /*background-color: transparent;*/
+ border-radius: 20px;
+ text-align: center;
+ box-shadow: 1px 1px 20px #ffffff;
+}
+
+.tabs:hover {
+ box-shadow: 0 0 12px rgba(33, 33, 33, .2);
+}
+.Neighborhood-card-user-image{
+border-radius: 50%;
+width: 50px;
+height: 50px;
+vertical-align: middle;
+}
+body {
+ background-color:black ;
+}
+  </style>
+  </head>
+  {% endblock %}

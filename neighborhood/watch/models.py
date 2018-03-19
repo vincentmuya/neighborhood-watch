@@ -6,18 +6,18 @@ from tinymce.models import HTMLField
 
 # Create your models here.
 class Neighborhood(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
     neighborhood_location = models.CharField(max_length=30, blank=True)
 
+
     def __str__(self):
-        return self.neighborhood_name
+        return self.neighborhood_location
 
     def save_neighborhood(self):
         self.save()
 
     @classmethod
     def this_neighborhood(cls):
-        area = cls.objects.objects.get(pk=this_object_id)
+        area = cls.objects.all()
         return area
 
 
@@ -25,6 +25,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_image = models.ImageField(upload_to="posts/",blank = True, null = True)
     bio = models.TextField(max_length=500, blank=True)
+    Neighborhood = models.ForeignKey(Neighborhood,null = True)
     neighborhood_name = models.CharField(max_length=30, blank=True)
 
     def __str__(self):
@@ -35,7 +36,7 @@ class Profile(models.Model):
 
     @classmethod
     def this_profile(cls):
-        profile = cls.objects.objects.get(pk=this_object_id)
+        profile = cls.objects.all()
         return profile
 
 class Post(models.Model):
@@ -57,9 +58,3 @@ def Create_profile(sender, **kwargs):
         user_profile = Profile.objects.create(user=kwargs['instance'])
 
 post_save.connect(Create_profile,sender=User)
-
-def Create_neighborhood(sender, **kwargs):
-    if kwargs['created']:
-        user_neighborhood = Neighborhood.objects.create(user=kwargs['instance'])
-
-post_save.connect(Create_neighborhood,sender=User)

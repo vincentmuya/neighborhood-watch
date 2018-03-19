@@ -4,12 +4,14 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from .forms import ProfileForm,UserForm,NewPostForm
 from django.contrib.auth.models import User
-from .models import Profile,Post
+from .models import Profile,Post,Neighborhood
 
 # Create your views here.
 def index(request):
     posts = Post.this_post()
-    return render(request, "index.html",{"posts":posts})
+    profile = Profile.this_profile()
+    area = Neighborhood.this_neighborhood()
+    return render(request, "index.html",{"posts":posts, "profile":profile, "area":area})
 
 @login_required(login_url='/accounts/login/')
 def new_post(request):
