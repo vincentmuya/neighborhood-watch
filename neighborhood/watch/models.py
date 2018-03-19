@@ -28,8 +28,6 @@ class Profile(models.Model):
     Neighborhood = models.ForeignKey(Neighborhood,null = True)
     neighborhood_name = models.CharField(max_length=30, blank=True)
 
-    def __str__(self):
-        return self.user
 
     def save_profile(self):
         self.save()
@@ -40,7 +38,7 @@ class Profile(models.Model):
         return profile
 
 class Post(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null = True)
+    user = models.ForeignKey(User, null = True)
     title = models.CharField(max_length=30, blank=True)
     post = HTMLField()
 

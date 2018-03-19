@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from .models import Profile,Post,Neighborhood
 
 # Create your views here.
+@login_required(login_url='/accounts/login/')
 def index(request):
     posts = Post.this_post()
     profile = Profile.this_profile()
@@ -27,6 +28,7 @@ def new_post(request):
         form = NewPostForm()
     return render(request, 'post.html', {"form": form},)
 
+@login_required(login_url='/accounts/login/')
 def profile(request, user_id):
     profile = Profile.objects.filter(user_id=request.user.id)
     return render(request, "profile.html", {"profile":profile})

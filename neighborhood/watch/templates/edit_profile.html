@@ -1,9 +1,25 @@
 {%extends 'base.html'%} {% load bootstrap3 %} {% block content %} {{ block.super}}
-working
-<form method="post">
-  {% csrf_token %}
-  {{ user_form.as_p }}
-  {{ profile_form.as_p }}
-  <button type="submit">Save changes</button>
-</form>
+<body>
+
+<div class="container">
+<br>
+<br>
+<br>
+<br>
+<div class="card" style="width: 50rem;">
+  <div class="card-header">
+    <h1>Edit Profile</h1>
+  </div>
+  <ul class="list-group list-group-flush">
+    <form method="post">
+      {% csrf_token %}
+      <li class="list-group-item">{{ user_form.as_p }}</li>
+      <li class="list-group-item">{{ profile_form.as_p }}</li>
+      <br>
+      <button type="submit">Save changes</button>
+    </form>
+</div>
+
+</div>
+</body>
 {%endblock%}
