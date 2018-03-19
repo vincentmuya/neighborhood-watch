@@ -60,6 +60,12 @@
 
             <!--Second column-->
             <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+              <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <button type="submit">Subscribe</button>
+              </form>
                 <!-- <h6 class="text-uppercase font-weight-bold">
                     <strong>Products</strong>
                 </h6>

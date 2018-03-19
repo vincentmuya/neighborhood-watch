@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse, Http404,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-from .forms import ProfileForm,UserForm,NewPostForm
+from .forms import ProfileForm,UserForm,NewPostForm,NewsLetterForm
 from django.contrib.auth.models import User
 from .models import Profile,Post,Neighborhood
 
@@ -48,3 +48,11 @@ def update_profile(request, user_id):
         'user_form': user_form,
         'profile_form': profile_form
     })
+def footer(request):
+    if request.method == 'POST':
+        form = NewsLetterForm(request.POST)
+        if form.is_valid():
+            print('valid')
+    else:
+        form = NewsLetterForm()
+    return render(request, 'footer.html', {"date": date,"news":news,"form":form})
