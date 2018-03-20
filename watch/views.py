@@ -28,21 +28,26 @@ def new_post(request):
         form = NewPostForm()
     return render(request, 'post.html', {"form": form},)
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login')
 def profile(request, user_id):
     profile = Profile.objects.filter(user_id=request.user.id)
-    return render(request, "profile.html", {"profile":profile})
+    print(profile)
+    posts  = Post.objects.filter(user_id=user_id)
+
+    return render(request, "profile.html", {"profile": profile, "posts": posts})
+
 
 @login_required
 @transaction.atomic
 def update_profile(request, user_id):
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
             return redirect('/')
+
     else:
         user_form = UserForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)
