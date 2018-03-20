@@ -19,23 +19,21 @@
 	<link href="https://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
 </head>
 <body>
+{%for profile_item in profile%}
 
+	<div class="container">
+    <h2>{{profile_item.user}}</h2>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <!------ Include the above in your HEAD tag ---------->
-    <div class="container">
-      {%for profile_item in profile%}
 
-      <h2>{{profile_item.user}}</h2>
     <div class="col-lg-15 col-sm-15">
-      <div class="card hovercard">
-          {% if profile.profile_image %}
+        <div class="card hovercard">
             <div class="card-background">
                 <img class="card-bkimg" alt="" src="{{profile_item.profile_image.url}}">
 
             </div>
-            {% endif %}
             <div class="useravatar">
                 <img alt="" src="{{profile_item.profile_image.url}}">
             </div>
